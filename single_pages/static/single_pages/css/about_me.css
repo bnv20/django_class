@@ -1,0 +1,30 @@
+/* Style for the image on the right */
+.right-image {
+    max-width: 100%; /* Ensure image is not larger than its container */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove any default inline behavior */
+    margin: 0 auto; /* Center the image in its container if it's smaller */
+}
+
+h1 {
+    font-size: 300%; /* Increase font size to 300% of the current size */
+    line-height: 1.6; /* Adjust line height for better readability */
+    margin-bottom: 20px; /* Increase space between heading and paragraph */
+}
+/* Targeting the unordered list inside the div with class 'col-lg-8' */
+.col-lg-8 ul {
+    font-size: 200%; /* Increase font size to 200% of the current size */
+    line-height: 1.6; /* Adjust line height for better readability */
+    padding-left: 20px; /* Adjust padding for the bullet points, if necessary */
+}
+
+/* Targeting the list items inside the div with class 'col-lg-8' */
+.col-lg-8 li {
+    margin-bottom: 10px; /* Increase space between list items */
+}
+
+/* Adjust layout for the container holding the list and image */
+
+.margin-for-footer {
+    margin-bottom: 130px;
+}
