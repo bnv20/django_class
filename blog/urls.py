@@ -6,4 +6,5 @@ urlpatterns = [
     # path('', views.index), # 블로그 메인 페이지
     path("<int:pk>/", views.PostDetail.as_view()),
     path("", views.PostList.as_view()),
+    path("category/<str:slug>/", views.category_page),
 ]
