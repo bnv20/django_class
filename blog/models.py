@@ -2,6 +2,18 @@ import os
 from django.db import models
 from django.contrib.auth.models import User
 
+
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return f'/blog/tag/{self.slug}/'
+
+
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
@@ -32,6 +44,8 @@ class Post(models.Model): # Post 모델 정의
         Category, null=True, blank=True, on_delete=models.SET_NULL
     )
 
+    tags = models.ManyToManyField(Tag, blank=True)
+    
     def __str__(self): # 객체를 문자열로 표현할 때 사용
         return f'[{self.pk}]{self.title}' # pk: 객체의 고유한 번호, title: 제목. 게시물의 기본 키가 대괄호로 묶인 문자열을 출력하고 바로 뒤에 게시물 제목이 표시
     def get_absolute_url(self): # get_absolute_url 메서드 정의
