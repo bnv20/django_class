@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.utils.text import slugify
-from django.shortcuts import get_object_or_404
+from django.utils.text import slugify # slugify 함수는 문자열을 URL에 적합한 형태로 변환
+from django.shortcuts import get_object_or_404 # 해당 객체가 존재하지 않을 경우 404 오류 페이지를 반환
 from .models import Post, Category, Tag, Comment
 from .forms import CommentForm
 from django.core.exceptions import PermissionDenied
-from django.db.models import Q
+from django.db.models import Q # db에서 데이터를 검색, 필터링시, 다양한 조건을 조합하고 동적으로 쿼리를 작성하는 상황에서 유용
 
 
 # CBV: Class Based View
@@ -28,6 +28,7 @@ class PostDetail(DetailView):
         context = super(PostDetail, self).get_context_data()
         context["categories"] = Category.objects.all()
         context["no_category_post_count"] = Post.objects.filter(category=None).count()
+        context['comment_form'] = CommentForm
         return context
 
 
@@ -46,11 +47,11 @@ class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
             form.instance.author = current_user
             response = super(PostCreate, self).form_valid(form)
 
-            tags_str = self.request.POST.get("tags_str")
+            tags_str = self.request.POST.get("tags_str") # tags_str은 태그를 입력하는 폼에서 전달받은 데이터
             if tags_str:
                 tags_str = tags_str.strip()
 
-                tags_str = tags_str.replace(",", ";")
+                tags_str = tags_str.replace(",", ";") # ,은 db에서 사용되는 구분자이어서 오해의 문제가 될 수 있음.
                 tags_list = tags_str.split(";")
 
                 for t in tags_list:
@@ -191,7 +192,23 @@ def delete_comment(request, pk):
     else:
         raise PermissionDenied
 
+class PostSearch(PostList):
+    paginate_by = None
 
+    def get_queryset(self):
+        q = self.kwargs['q']
+        post_list = Post.objects.filter(
+            Q(title__contains=q) | Q(tags__name__contains=q)
+        ).distinct()
+        return post_list
+
+    def get_context_data(self, **kwargs):
+        context = super(PostSearch, self).get_context_data()
+        q = self.kwargs['q']
+        context['search_info'] = f'Search: {q} ({self.get_queryset().count()})'
+
+        return context
+    
 # FBV: Function Based View
 # def index(request):
 #     posts = Post.objects.all().order_by('-pk') # 모든 Post 객체를 가져와서 pk 역순으로 정렬

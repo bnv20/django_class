@@ -44,6 +44,12 @@ INSTALLED_APPS = [
 
     'crispy_forms',
     'markdownx',
+
+    'django.contrib.sites', # 사이트 관리
+    'allauth', # allauth 앱
+    'allauth.account', # 계정 관리
+    'allauth.socialaccount', # 소셜 계정 관리
+    'allauth.socialaccount.providers.google', # 구글 로그인
 ]
 
 MIDDLEWARE = [
@@ -130,3 +136,17 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "_media")  # _media 폴더 생성
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1 # 사이트 아이디
+
+ACCOUNT_EMAIL_REQUIRED = True # 회원가입시 이메일 필수
+ACCOUNT_EMAIL_VERIFICATION = 'none' # 이메일 인증 필요없음
+LOGIN_REDIRECT_URL = '/blog/' # 로그인 후 이동 페이지
