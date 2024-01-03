@@ -26,7 +26,8 @@
         <hr>
 
         {% if user.is_authenticated and user == post.author %}
-            <a class="btn btn-info btn-sm float-right" href="/blog/update_post/{{ post.pk }}/" role="button"><i class="fas fa-pen"></i>  Edit Post</a>
+            <a class="btn btn-info btn-sm float-right" href="/blog/update_post/{{ post.pk }}/" role="button">
+                <i class="fas fa-pen"></i>  Edit Post</a>
         {% endif %}
 
         <!-- Date/Time -->
@@ -91,7 +92,8 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
                 {% else %}
-                    <a role="button" class="btn btn-outline-dark btn-block btn-sm" href="#" data-toggle="modal" data-target="#loginModal">Log in and leave a comment</a>
+                    <a role="button" class="btn btn-outline-dark btn-block btn-sm" 
+                    href="#" data-toggle="modal" data-target="#loginModal">Log in and leave a comment</a>
                 {% endif %}
             </div>
         </div>
@@ -117,8 +119,7 @@
                                    data-toggle="modal" data-target="#deleteCommentModal-{{ comment.pk }}">
                                     delete
                                 </a>
-                            </div>
-
+                            </div>                            
                             <!-- Modal -->
                             <div class="modal fade" id="deleteCommentModal-{{ comment.pk }}" tabindex="-1" role="dialog" aria-labelledby="deleteCommentModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -139,13 +140,13 @@
                                     </div>
                                 </div>
                             </div>
-
                         {% endif %}
                         <h5 class="mt-0">
                             {{ comment.author.username }}
                             &nbsp;&nbsp;<small class="text-muted">{{ comment.created_at }}</small>
                         </h5>
-                        <p>{{ comment.content | linebreaks }}</p>
+                        <p>{{ comment.content | linebreaks }}</p> 
+                        {% comment %} linebreaks : 줄바꿈을 <br>로 바꿔줌 {% endcomment %}
                         {% if comment.created_at != comment.modified_at %}
                             <p class="text-muted float-right"><small>Updated: {{ comment.modified_at }}</small></p>
                         {% endif %}

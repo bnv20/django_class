@@ -141,28 +141,31 @@ def tag_page(request, slug):
     
 def new_comment(request, pk):
     if request.user.is_authenticated:
-        post = get_object_or_404(Post, pk=pk)
+        post = get_object_or_404(Post, pk=pk) # pk에 해당하는 Post 객체를 가져옴
 
         if request.method == 'POST':
-            comment_form = CommentForm(request.POST)
-            if comment_form.is_valid():
-                comment = comment_form.save(commit=False)
-                comment.post = post
-                comment.author = request.user
+            comment_form = CommentForm(request.POST) 
+            # CommentForm(request.POST)를 사용하여 제출된 데이터로 댓글 폼의 인스턴스를 생성
+            if comment_form.is_valid(): # 폼의 데이터가 유효한지 검사
+                comment = comment_form.save(commit=False) 
+                # comment_form.save(commit=False)를 사용하여 Comment 객체를 생성하되, 데이터베이스에는 저장하지 않음
+                comment.post = post # 댓글 객체에 post 속성을 할당
+                comment.author = request.user # 댓글 객체에 author 속성을 할당
                 comment.save()
-                return redirect(comment.get_absolute_url())
+                return redirect(comment.get_absolute_url()) 
+            # 댓글 객체의 get_absolute_url 메서드를 호출하여 댓글 상세 페이지로 이동
         else:
-            return redirect(post.get_absolute_url())
+            return redirect(post.get_absolute_url()) # 댓글 폼이 유효하지 않으면 post.get_absolute_url()로 이동
     else:
-        raise PermissionDenied
+        raise PermissionDenied # 로그인하지 않은 사용자가 댓글을 작성하려고 하면 PermissionDenied 예외를 발생시킴
 
 class CommentUpdate(LoginRequiredMixin, UpdateView):
-    model = Comment
-    form_class = CommentForm
+    model = Comment # Comment 모델을 사용
+    form_class = CommentForm # 사용할 폼으로 CommentForm을 지정
 
-    def dispatch(self, request, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs): 
         if request.user.is_authenticated and request.user == self.get_object().author:
-            return super(CommentUpdate, self).dispatch(request, *args, **kwargs)
+            return super(CommentUpdate, self).dispatch(request, *args, **kwargs) # 부모 클래스의 dispatch 메서드를 호출
         else:
             raise PermissionDenied
 
@@ -181,7 +184,7 @@ class PostSearch(PostList):
     def get_queryset(self):
         q = self.kwargs['q']
         post_list = Post.objects.filter(
-            Q(title__contains=q) | Q(tags__name__contains=q)
+            Q(title__contains=q) | Q(tags__name__contains=q) # 장고의 쿼리 표현식
         ).distinct()
         return post_list
 
