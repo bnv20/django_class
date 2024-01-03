@@ -19,23 +19,30 @@
                     <a class="nav-link" href="/about_me/">About Me</a>
                 </li>
             </ul>
-            <ul class="navbar-nav ml-auto"> {% if user.is_authenticated %} <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{ user.username }} </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="/accounts/logout/">Log Out</a>
-                </div>
-            </li> {% else %} <li class="nav-item">
-                <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Log In</a>
-            </li> {% endif %} </ul>
-            
+            <ul class="navbar-nav ml-auto"> 
+                {% if user.is_authenticated %} 
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{ user.username }} 
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/accounts/logout/">Log Out</a>
+                    </div>
+                </li> 
+                {% else %} 
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Log In</a> {% comment %} 클릭 시 로그인 모달창 띄우기 {% endcomment %}
+                    
+                </li> 
+                {% endif %} 
+            </ul>            
         </div>
     </div>
 </nav>
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="logInModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
+     aria-hidden="true"> {% comment %} bootstrap 모달 구성요소 스타일 {% endcomment %}
+    <div class="modal-dialog" role="document">  {% comment %} 모달의 대화 상자 형식을 지정 {% endcomment %}
+        <div class="modal-content"> {% comment %} 모달의 내용을 담는 컨테이너 {% endcomment %}
             <div class="modal-header">
                 <h5 class="modal-title" id="loginModalLabel"> <i class="fas fa-sign-in-alt"></i>&nbsp Log In</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
