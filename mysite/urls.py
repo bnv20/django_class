@@ -25,7 +25,7 @@ urlpatterns = [
     path("data/", include("data.urls")),
     path("blog/", include("blog.urls")),
     path('markdownx/', include('markdownx.urls')),
-    path('accounts/', include('allauth.urls')), # 별도의 인증 관련 URL 및 뷰를 직접 구현할 필요 없이, django-allauth가 제공하는 기능을 쉽게 통합
+    path('accounts/', include('allauth.urls')), # 별도의 인증 관련 URL 및 뷰를 직접 구현할 필요 없이, django-allauth가 제공
 ]
 urlpatterns += static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT

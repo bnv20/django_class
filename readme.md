@@ -60,3 +60,33 @@ Python의 웹 프레임워크인 Django의 핵심 부분 중 하나. 이 시스�
 - 목적: 특정 객체의 상세 정보를 표시하기 위한 뷰. 특징: URL에서 전달된 키(보통 기본 키)를 기반으로 특정 모델 인스턴스를 검색하여 템플릿에 전달. 
 - Book 모델에 대한 DetailView를 구현하면 book_detail.html 파일을 생성.
 library/templates/library/book_detail.html
+
+## 로그인
+
+#### 라이브러리 설치 : pip install django-allauth
+#### INSTALLED_APPS 추가
+- "django.contrib.sites", # 사이트 관리
+- "allauth", # allauth 앱
+- "allauth.account", # 계정 관리
+- "allauth.socialaccount", # 소셜 계정 관리
+- "allauth.socialaccount.providers.google", # 구글 로그인
+
+#### AUTHENTICATION_BACKENDS 설정
+AUTHENTICATION_BACKENDS = [
+"django.contrib.auth.backends.ModelBackend", 
+"allauth.account.auth_backends.AuthenticationBackend", ] 
+
+SITE_ID = 1 # 사이트 아이디
+
+- ACCOUNT_EMAIL_REQUIRED = True # 회원가입시 이메일 필수 
+- ACCOUNT_EMAIL_VERIFICATION = "none" # 이메일 인증 필요없음 
+- LOGIN_REDIRECT_URL = "/blog/" # 로그인 후 이동 페이지
+
+#### 구글 개발자 콘솔
+- 새 프로젝트와 클라이언트 만들기 - console.developers.google.com 에 접속
+- 새 프로젝트 생성 > 만들기 > OAuth 동의화면 외부 선택 > 앱이름
+- 사용자 인증 정보 > 사용자 인증 정보 만들기 > OAuth 클라이언트 ID > 만들기 (유형, 이름, URL, URI 입력)
+- 승인된 자바스크립트 원본 : http://127.0.0.1:8000
+- 승인된 리디렉션 URI : http://127.0.0.1:8000/accounts/google/login/callback/
+
+#### navbar {% load socialaccount %}

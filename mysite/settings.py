@@ -139,14 +139,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "_media")  # _media 폴더 생성
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin, regardless of `allauth`
+    # 사용자명과 비밀번호를 이용한 인증을 지원
     'django.contrib.auth.backends.ModelBackend',
 
-    # `allauth` specific authentication methods, such as login by e-mail
+    #  이메일 주소를 이용한 인증 등 추가적인 인증 방식을 지원
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-SITE_ID = 1 # 사이트 아이디
+SITE_ID = 1 # 사이트 아이디 지정
 
 ACCOUNT_EMAIL_REQUIRED = True # 회원가입시 이메일 필수
 ACCOUNT_EMAIL_VERIFICATION = 'none' # 이메일 인증 필요없음

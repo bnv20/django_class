@@ -15,7 +15,9 @@ def news_search(request):
         for news_item in soup.find_all('a', class_='news_tit'):
             title = news_item.get('title')
             link = news_item.get('href')
-            news_list.append({'title': title, 'link': link})
+            # 관련 뉴스 아이템의 설명 추출
+            description = news_item.find_next_sibling('div', class_='news_dsc').get_text(strip=True)
+            news_list.append({'title': title, 'link': link, 'description': description})
 
     return render(request, 'data/newssearch.html', {'news_list': news_list})
 
