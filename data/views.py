@@ -2,7 +2,6 @@ from django.shortcuts import render
 import requests
 from bs4 import BeautifulSoup
 
-
 def news_search(request):
     keyword = request.GET.get('q', '')  # Assuming 'q' is the query parameter
     news_list = []

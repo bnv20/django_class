@@ -23,23 +23,8 @@
                 </div>
             </div>
         </form>
-
         <!-- News List -->
-        {% if news_list %}
-        {% comment %} <div class="row">
-            {% for news in news_list %}
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <img class="card-img-top" src="{% static 'data/images/news_image.jpg' %}" alt="News Image">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ news.title }}</h5>
-                            <p class="card-text">{{ news.description }}</p>
-                            <a href="{{ news.link }}" class="btn btn-secondary">Read More</a>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div> {% endcomment %}
+        {% if news_list %}        
         <div>
             {% for news in news_list %}
                 <div style="margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
@@ -48,8 +33,7 @@
                     <a href="{{ news.link }}" class="btn btn-secondary">Read More</a>
                 </div>
             {% endfor %}
-        </div> 
-        
+        </div>       
         
         {% endif %}
     </div>

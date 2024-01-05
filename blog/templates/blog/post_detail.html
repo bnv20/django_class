@@ -26,10 +26,38 @@
         <hr>
 
         {% if user.is_authenticated and user == post.author %}
-            <a class="btn btn-info btn-sm float-right" href="/blog/update_post/{{ post.pk }}/" role="button">
-                <i class="fas fa-pen"></i>  Edit Post</a>
-        {% endif %}
+            <div class="float-right">
+                <a class="btn btn-info btn-sm" href="/blog/update_post/{{ post.pk }}/" role="button">
+                    <i class="fas fa-pen"></i>  Edit Post</a>
 
+        {% comment %} Delete Post     {% endcomment %}
+                <a role="button" href="#" id="post-{{ post.pk }}-delete-modal-btn"
+                   class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deletePostModal-{{ post.pk }}">
+                   Delete Post
+                </a>
+            </div>
+        {% endif %}
+        <!-- Delete Post Modal -->
+        <div class="modal fade" id="deletePostModal-{{ post.pk }}" tabindex="-1" role="dialog" aria-labelledby="deletePostModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deletePostModalLabel">포스트 삭제</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        정말로 이 포스트를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                        <a role="button" class="btn btn-danger" href="{% url 'delete_post' post.pk %}">삭제</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
         <!-- Date/Time -->
         <p>Posted on {{ post.created_at }}</p>
 

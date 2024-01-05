@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.utils.text import slugify
 from django.shortcuts import get_object_or_404
@@ -104,6 +105,16 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
                 self.object.tags.add(tag)
 
         return response
+
+# post 삭제
+def delete_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    
+    if request.user.is_authenticated and request.user == post.author:
+        post.delete()
+        return redirect('/blog/')
+    else:
+        raise PermissionDenied
 
 # slug는 일반적으로 이미 얻은 데이터를 사용하여 유효한 url을 생성하는 방법
 def category_page(request, slug):
